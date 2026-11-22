@@ -1,335 +1,311 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Unspoken &amp; Unbroken by Aima Noor | Academic Struggles, Stories &amp; Research</title>
-  <meta name="title" content="Unspoken & Unbroken by Aima Noor | Academic Struggles, Stories & Research" />
-  <meta name="description" content="Founded and curated by Aima Noor from Bhakkar, Punjab, Pakistan. A supportive academic platform exploring student loneliness, overcoming past academic failures, and original research articles." />
-  <meta name="keywords" content="Aima Noor, Bhakkar, Aima Noor Bhakkar, academic life struggles, student loneliness, overcoming failure, university burnout, research articles, BS English Literature and Linguistics" />
-  <meta name="author" content="Aima Noor — Bhakkar, Punjab, Pakistan" />
-  <meta name="robots" content="index, follow" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Unspoken & Unbroken — Founded by Aima Noor (Bhakkar)" />
-  <meta property="og:description" content="Real student stories on navigating academic isolation and past setbacks, paired with original research articles curated by Aima Noor from Bhakkar, Punjab, Pakistan." />
+  <title>Noor — Voices, Research & Study Hub</title>
+  <meta name="description" content="Curated by Noor. A quiet, connected space for stories, research notes, and competitive exam preparation." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep: #090f1a;
+      --bg-surface: rgba(17, 27, 46, 0.78);
+      --bg-surface-solid: #111b2e;
+      --text-main: #eef2f7;
+      --text-muted: #9aa8bd;
+      --accent-teal: #4fd1c5;
+      --accent-amber: #e8a85b;
+      --border-subtle: rgba(148, 163, 184, 0.16);
+      --border-glow: rgba(79, 209, 197, 0.35);
+      --transition-smooth: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-deep); color: var(--text-main); line-height: 1.7; overflow-x: hidden; position: relative; }
+    h1, h2, h3, .display-font { font-family: 'Cormorant Garamond', serif; letter-spacing: 0.01em; }
+    #networkCanvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.72; }
+    .page-layer { position: relative; z-index: 1; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .admin-bar { background: rgba(10, 16, 28, 0.96); border-bottom: 1px solid var(--border-glow); color: var(--text-main); padding: 12px 24px; display: none; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; backdrop-filter: blur(12px); }
+    .admin-bar.active { display: flex; }
+    header { position: sticky; top: 0; z-index: 40; background: rgba(9, 15, 26, 0.76); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-subtle); transition: var(--transition-smooth); }
+    .nav-container { max-width: 1120px; margin: 0 auto; padding: 15px 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-main); }
+    .brand-mark { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, rgba(79, 209, 197, 0.2), rgba(232, 168, 91, 0.2)); border: 1px solid var(--border-glow); display: flex; align-items: center; justify-content: center; color: var(--accent-teal); font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 700; transition: var(--transition-smooth); }
+    .brand:hover .brand-mark { transform: rotate(-6deg) scale(1.05); border-color: var(--accent-amber); color: var(--accent-amber); }
+    .brand-title { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.45rem; line-height: 1.05; }
+    .brand-sub { font-size: 0.7rem; letter-spacing: 1.6px; color: var(--text-muted); text-transform: uppercase; }
+    nav { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+    nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; position: relative; transition: var(--transition-smooth); }
+    nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: linear-gradient(90deg, var(--accent-teal), var(--accent-amber)); transition: width 0.3s ease; }
+    nav a:hover { color: var(--text-main); }
+    nav a:hover::after { width: 100%; }
+    .btn-primary { background: linear-gradient(135deg, var(--accent-teal), #319795); color: #071018 !important; padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; border: none; cursor: pointer; transition: var(--transition-smooth); box-shadow: 0 4px 18px rgba(79, 209, 197, 0.2); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(79, 209, 197, 0.35); }
+    .btn-amber { background: linear-gradient(135deg, var(--accent-amber), #d08738); color: #0b111a; padding: 12px 22px; border-radius: 11px; text-decoration: none; font-weight: 600; font-size: 0.94rem; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: var(--transition-smooth); }
+    .btn-amber:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232, 168, 91, 0.28); }
+    .btn-ghost { background: rgba(17, 27, 46, 0.65); color: var(--text-main); border: 1px solid var(--border-subtle); padding: 12px 22px; border-radius: 11px; text-decoration: none; font-weight: 500; font-size: 0.94rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: var(--transition-smooth); }
+    .btn-ghost:hover { border-color: var(--accent-teal); background: rgba(79, 209, 197, 0.08); transform: translateY(-2px); }
+    .hero { max-width: 860px; margin: 0 auto; padding: 86px 22px 68px; text-align: center; }
+    .pill { display: inline-flex; align-items: center; gap: 9px; background: rgba(17, 27, 46, 0.75); border: 1px solid var(--border-subtle); padding: 7px 16px; border-radius: 999px; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 24px; backdrop-filter: blur(8px); }
+    .pill-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-teal); box-shadow: 0 0 10px var(--accent-teal); }
+    .hero h1 { font-size: clamp(2.5rem, 5.5vw, 4.1rem); line-height: 1.1; color: var(--text-main); margin-bottom: 22px; }
+    .hero h1 em { color: var(--accent-amber); font-style: italic; }
+    .hero p { font-size: 1.05rem; color: var(--text-muted); max-width: 670px; margin: 0 auto 34px; }
+    .hero-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .section { max-width: 1120px; margin: 0 auto; padding: 56px 22px; border-top: 1px solid var(--border-subtle); }
+    .section-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin-bottom: 30px; }
+    .section-tag { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 1.8px; color: var(--accent-teal); font-weight: 600; margin-bottom: 6px; }
+    .section h2 { font-size: 2.25rem; color: var(--text-main); line-height: 1.15; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .card { background: var(--bg-surface); backdrop-filter: blur(12px); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; transition: var(--transition-smooth); }
+    .card:hover { transform: translateY(-5px); border-color: var(--border-glow); box-shadow: 0 16px 34px rgba(0, 0, 0, 0.35); }
+    .card-meta { display: flex; justify-content: space-between; font-size: 0.76rem; color: var(--accent-amber); font-weight: 600; margin-bottom: 10px; }
+    .card h3 { font-size: 1.45rem; margin-bottom: 10px; color: var(--text-main); line-height: 1.25; }
+    .card p { color: var(--text-muted); font-size: 0.93rem; margin-bottom: 18px; }
+    .card-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--border-subtle); font-size: 0.82rem; color: var(--text-muted); }
+    .read-btn { background: none; border: none; color: var(--accent-teal); font-weight: 600; cursor: pointer; font-size: 0.88rem; transition: var(--transition-smooth); }
+    .read-btn:hover { color: var(--accent-amber); transform: translateX(3px); }
+    .empty-state { grid-column: 1 / -1; background: var(--bg-surface); border: 1px dashed var(--border-subtle); border-radius: 16px; padding: 36px 24px; text-align: center; color: var(--text-muted); }
+    .space-box { background: var(--bg-surface); backdrop-filter: blur(12px); border: 1px solid var(--border-subtle); border-radius: 18px; padding: 34px; display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 768px) { .space-box { grid-template-columns: 2fr 1fr; align-items: center; } }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(5, 9, 17, 0.78); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 100; opacity: 0; transition: opacity 0.28s ease; }
+    .modal-backdrop.open { display: flex; opacity: 1; }
+    .modal { background: var(--bg-surface-solid); border: 1px solid var(--border-glow); border-radius: 18px; max-width: 700px; width: 100%; max-height: 88vh; overflow-y: auto; padding: 30px; position: relative; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55); animation: modalPop 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+    @keyframes modalPop { from { transform: scale(0.96) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+    .close-btn { position: absolute; top: 18px; right: 20px; background: rgba(255, 255, 255, 0.06); color: var(--text-main); border: 1px solid var(--border-subtle); width: 34px; height: 34px; border-radius: 50%; font-size: 1rem; cursor: pointer; transition: var(--transition-smooth); }
+    .close-btn:hover { background: rgba(255, 255, 255, 0.14); }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.86rem; font-weight: 600; margin-bottom: 6px; color: var(--text-main); }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 11px 14px; border: 1px solid var(--border-subtle); border-radius: 10px; font-family: inherit; font-size: 0.94rem; background: rgba(9, 15, 26, 0.85); color: var(--text-main); transition: var(--transition-smooth); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent-teal); }
+    .form-group textarea { min-height: 145px; resize: vertical; }
+    .badge-pending { background: rgba(232, 168, 91, 0.16); color: var(--accent-amber); border: 1px solid rgba(232, 168, 91, 0.35); padding: 3px 10px; border-radius: 999px; font-size: 0.74rem; font-weight: 600; }
+    footer { border-top: 1px solid var(--border-subtle); padding: 36px 22px; text-align: center; color: var(--text-muted); font-size: 0.88rem; margin-top: 36px; }
+    .admin-trigger { background: none; border: none; color: var(--text-muted); text-decoration: underline; cursor: pointer; font-size: 0.82rem; margin-top: 10px; transition: var(--transition-smooth); }
+    .admin-trigger:hover { color: var(--accent-teal); }
+  </style>
+</head>
+<body>
+  <canvas id="networkCanvas"></canvas>
+  <div class="page-layer">
+    <div id="adminBar" class="admin-bar">
+      <div><strong>Admin Mode</strong> — Welcome, Noor. Publish or moderate live content anytime.</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn-primary" onclick="openPublishModal()">+ New Research / CSS Note</button>
+        <button class="btn-ghost" style="padding:9px 14px;" onclick="openModerationModal()">Review Stories (<span id="pendingCount">0</span>)</button>
+        <button class="btn-ghost" style="padding:9px 14px;" onclick="logoutAdmin()">Logout</button>
+      </div>
+    </div>
+    <header>
+      <div class="nav-container">
+        <a href="#" class="brand">
+          <div class="brand-mark">N</div>
+          <div><div class="brand-title">Noor</div><div class="brand-sub">Stories • Research • CSS & GK</div></div>
+        </a>
+        <nav>
+          <a href="#home">Home</a>
+          <a href="#research">Research</a>
+          <a href="#css-gk">CSS & GK</a>
+          <a href="#stories">Stories</a>
+          <a href="#about">About</a>
+          <button class="btn-primary" onclick="openStoryModal()">Share a Story</button>
+        </nav>
+      </div>
+    </header>
+    <section id="home" class="hero reveal">
+      <div class="pill"><span class="pill-dot"></span>Curated by <strong>Noor</strong> • Growing Step by Step</div>
+      <h1>Every quiet path holds a story worth <em>unfolding</em>.</h1>
+      <p>A calm digital space shaped by <strong>Noor</strong>—bringing together thoughtful research notes, CSS & General Knowledge study guides, and honest reflections from learners navigating growth at their own pace.</p>
+      <div class="hero-actions">
+        <a href="#research" class="btn-amber">Explore Notes & Research ↓</a>
+        <button class="btn-ghost" onclick="openStoryModal()">✎ Share a Story</button>
+      </div>
+    </section>
+    <section id="research" class="section reveal">
+      <div class="section-header"><div><div class="section-tag">Academic Inquiry</div><h2>Research Articles</h2></div><div style="color:var(--text-muted); font-size:0.88rem;">Essays, Literary Notes & Ideas</div></div>
+      <div id="researchGrid" class="grid"></div>
+    </section>
+    <section id="css-gk" class="section reveal">
+      <div class="section-header"><div><div class="section-tag">Structured Study Vault</div><h2>CSS & General Knowledge Hub</h2></div><div style="color:var(--text-muted); font-size:0.88rem;">Outlines, Current Affairs & GK</div></div>
+      <div id="cssGrid" class="grid"></div>
+    </section>
+    <section id="stories" class="section reveal">
+      <div class="section-header"><div><div class="section-tag">Shared Reflections</div><h2>Stories & Resilience</h2></div><button class="btn-ghost" style="padding:10px 16px;" onclick="openStoryModal()">+ Submit a Story</button></div>
+      <div id="storiesGrid" class="grid"></div>
+    </section>
+    <section id="about" class="section reveal">
+      <div class="space-box">
+        <div>
+          <div class="section-tag">About This Space</div>
+          <h2 style="margin-bottom:12px;">Noor</h2>
+          <p style="color:var(--text-muted); margin-bottom:12px;">This space is curated by <strong>Noor</strong> as an evolving notebook of ideas, structured CSS & General Knowledge study material, and reflective writing.</p>
+          <p style="color:var(--text-muted);">Everything here grows organically—new notes and articles are added whenever ready, at a steady and unhurried rhythm.</p>
+        </div>
+        <div style="background:rgba(9, 15, 26, 0.65); padding:22px; border-radius:14px; border:1px solid var(--border-subtle);">
+          <div style="font-weight:700; margin-bottom:10px; color:var(--accent-amber);">Core Focus</div>
+          <ul style="padding-left:18px; color:var(--text-muted); font-size:0.9rem; line-height:1.95;">
+            <li>Research & Analytical Writing</li>
+            <li>CSS & General Knowledge Notes</li>
+            <li>Student Stories & Reflections</li>
+            <li>Thoughtful, Self-Paced Growth</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <footer><div>Curated by <strong>Noor</strong>.</div><button class="admin-trigger" onclick="openAdminLogin()">Admin Login</button></footer>
+  </div>
+  <div id="readerModal" class="modal-backdrop"><div class="modal"><button class="close-btn" onclick="closeModal('readerModal')">✕</button><div id="readerMeta" class="section-tag"></div><h2 id="readerTitle" style="margin-bottom:10px; font-size:2rem;"></h2><div id="readerSub" style="font-size:0.84rem; color:var(--text-muted); margin-bottom:20px; padding-bottom:14px; border-bottom:1px solid var(--border-subtle);"></div><div id="readerBody" style="font-size:1rem; line-height:1.85; white-space:pre-line; color:var(--text-main);"></div></div></div>
+  <div id="storyModal" class="modal-backdrop"><div class="modal"><button class="close-btn" onclick="closeModal('storyModal')">✕</button><div class="section-tag">Community Space</div><h2 style="margin-bottom:8px;">Share a Story</h2><p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:18px;">Submissions are reviewed by Noor before appearing publicly. You can use a pen name or stay anonymous.</p><form id="storyForm"><div class="form-group"><label>Name (or "Anonymous")</label><input type="text" id="storyAuthor" placeholder="e.g., Anonymous or Reader" required /></div><div class="form-group"><label>Title</label><input type="text" id="storyTitle" placeholder="Give your story a title" required /></div><div class="form-group"><label>Your Story</label><textarea id="storyContent" placeholder="Write your thoughts here..." required></textarea></div><button type="submit" class="btn-primary" style="width:100%; padding:12px;">Submit for Review</button></form></div></div>
+  <div id="loginModal" class="modal-backdrop"><div class="modal" style="max-width:420px;"><button class="close-btn" onclick="closeModal('loginModal')">✕</button><h2 style="margin-bottom:8px;">Admin Login</h2><p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:16px;">Enter your password to manage posts and stories.</p><div class="form-group"><label>Password</label><input type="password" id="adminPassInput" placeholder="Enter admin password" /></div><button class="btn-primary" style="width:100%; padding:12px;" onclick="verifyAdmin()">Login</button></div></div>
+  <div id="publishModal" class="modal-backdrop"><div class="modal"><button class="close-btn" onclick="closeModal('publishModal')">✕</button><div class="section-tag">Live Publisher</div><h2 style="margin-bottom:16px;">Publish New Content</h2><form id="publishForm"><div class="form-group"><label>Section</label><select id="pubSection"><option value="research">Research Articles</option><option value="css">CSS & General Knowledge Hub</option></select></div><div class="form-group"><label>Category / Tag</label><input type="text" id="pubCategory" placeholder="e.g., Literature, Essay Outline, GK" required /></div><div class="form-group"><label>Title</label><input type="text" id="pubTitle" placeholder="Enter title" required /></div><div class="form-group"><label>Short Summary</label><input type="text" id="pubSummary" placeholder="Brief summary shown on card..." required /></div><div class="form-group"><label>Full Content</label><textarea id="pubBody" placeholder="Write or paste your full article or notes..." required></textarea></div><button type="submit" class="btn-primary" style="width:100%; padding:12px;">Publish Live</button></form></div></div>
+  <div id="moderationModal" class="modal-backdrop"><div class="modal"><button class="close-btn" onclick="closeModal('moderationModal')">✕</button><h2 style="margin-bottom:14px;">Submitted Stories</h2><div id="moderationList"></div></div></div>
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ivory: '#FAF9F6',
-            ivoryDark: '#F2EFE9',
-            slateInk: '#1E293B',
-            slateMuted: '#475569',
-            sage: '#4A6B5D',
-            sageLight: '#E8EFEA',
-            terracotta: '#C06C54',
-            terracottaLight: '#F9ECE8',
-          },
-          fontFamily: {
-            serif: ['"Playfair Display"', 'Georgia', 'serif'],
-            sans: ['"Inter"', 'system-ui', 'sans-serif'],
-          },
-          boxShadow: {
-            soft: '0 10px 30px -10px rgba(30, 41, 59, 0.08)',
-            card: '0 4px 20px -2px rgba(30, 41, 59, 0.05)',
+    const canvas = document.getElementById("networkCanvas");
+    const ctx = canvas.getContext("2d");
+    let width, height, nodes = [];
+    const mouse = { x: null, y: null };
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      const count = Math.min(72, Math.floor((width * height) / 22000));
+      nodes = Array.from({ length: count }, () => ({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 0.45, vy: (Math.random() - 0.5) * 0.45, r: Math.random() * 2 + 1.2 }));
+    }
+    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("mousemove", (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    function animateNetwork() {
+      ctx.clearRect(0, 0, width, height);
+      const maxDist = 145;
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > width) n.vx *= -1;
+        if (n.y < 0 || n.y > height) n.vy *= -1;
+        if (mouse.x !== null && mouse.y !== null) {
+          const dxm = n.x - mouse.x; const dym = n.y - mouse.y; const distM = Math.hypot(dxm, dym);
+          if (distM < 120) { n.x += dxm * 0.008; n.y += dym * 0.008; }
+        }
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = i % 5 === 0 ? "rgba(232, 168, 91, 0.65)" : "rgba(79, 209, 197, 0.55)"; ctx.fill();
+        for (let j = i + 1; j < nodes.length; j++) {
+          const m = nodes[j]; const dist = Math.hypot(n.x - m.x, n.y - m.y);
+          if (dist < maxDist) {
+            const alpha = (1 - dist / maxDist) * 0.22;
+            ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(m.x, m.y);
+            ctx.strokeStyle = `rgba(79, 209, 197, ${alpha})`; ctx.lineWidth = 1; ctx.stroke();
           }
         }
       }
-    };
+      requestAnimationFrame(animateNetwork);
+    }
+    resizeCanvas(); animateNetwork();
+    const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add("visible"); } }); }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
   </script>
-  <style>
-    body { background-color: #FAF9F6; color: #1E293B; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-    h1, h2, h3, .font-editorial { font-family: 'Playfair Display', Georgia, serif; }
-    .fade-in { animation: fadeIn 0.35s ease-out forwards; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-    .modal-scroll::-webkit-scrollbar { width: 6px; }
-    .modal-scroll::-webkit-scrollbar-track { background: #F2EFE9; border-radius: 9999px; }
-    .modal-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
-    .modal-scroll::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
-  </style>
-</head>
-<body class="antialiased selection:bg-sage/20 selection:text-slateInk">
-  <header class="sticky top-0 z-40 w-full bg-ivory/90 backdrop-blur-md border-b border-slateInk/10">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20">
-        <a href="#home" class="flex items-center gap-3 group focus:outline-none">
-          <div class="w-10 h-10 rounded-xl bg-sage text-ivory flex items-center justify-center shadow-sm group-hover:bg-terracotta transition-colors duration-300">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-            </svg>
-          </div>
-          <div>
-            <span class="block font-editorial text-xl sm:text-2xl font-bold tracking-tight text-slateInk leading-none">Unspoken &amp; Unbroken</span>
-            <span class="block text-[11px] sm:text-xs font-medium uppercase tracking-widest text-sage mt-1">Academic Voices &amp; Research</span>
-          </div>
-        </a>
-        <nav class="hidden md:flex items-center space-x-7 text-sm font-medium text-slateMuted" aria-label="Main Navigation">
-          <a href="#home" class="hover:text-sage transition-colors py-2">Home</a>
-          <a href="#stories" class="hover:text-sage transition-colors py-2">Stories</a>
-          <a href="#research" class="hover:text-sage transition-colors py-2">Research Articles</a>
-          <a href="#founder" class="hover:text-sage transition-colors py-2">Founder</a>
-          <a href="#share" class="px-4 py-2.5 rounded-xl bg-sage text-white hover:bg-sage/90 transition-all shadow-sm">Share Your Story</a>
-        </nav>
-        <button id="mobileMenuBtn" type="button" class="md:hidden p-2.5 rounded-xl text-slateInk hover:bg-ivoryDark focus:outline-none focus:ring-2 focus:ring-sage" aria-label="Toggle Menu" aria-expanded="false">
-          <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
-          <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-        </button>
-      </div>
-    </div>
-    <div id="mobileMenu" class="hidden md:hidden bg-ivory border-b border-slateInk/10 px-4 pt-2 pb-5 space-y-2 shadow-soft">
-      <a href="#home" class="mobile-nav-link block px-3 py-2.5 rounded-xl text-base font-medium text-slateInk hover:bg-ivoryDark">Home</a>
-      <a href="#stories" class="mobile-nav-link block px-3 py-2.5 rounded-xl text-base font-medium text-slateInk hover:bg-ivoryDark">Stories</a>
-      <a href="#research" class="mobile-nav-link block px-3 py-2.5 rounded-xl text-base font-medium text-slateInk hover:bg-ivoryDark">Research Articles</a>
-      <a href="#founder" class="mobile-nav-link block px-3 py-2.5 rounded-xl text-base font-medium text-slateInk hover:bg-ivoryDark">About the Founder</a>
-      <a href="#share" class="mobile-nav-link block px-3 py-3 mt-2 rounded-xl text-center text-base font-medium bg-sage text-white hover:bg-sage/90">Share Your Story</a>
-    </div>
-  </header>
-  <main>
-    <section id="home" class="relative overflow-hidden pt-12 pb-20 sm:pt-20 sm:pb-28 border-b border-slateInk/10">
-      <div class="pointer-events-none absolute -top-24 -right-24 w-96 h-96 rounded-full bg-sage/10 blur-3xl"></div>
-      <div class="pointer-events-none absolute top-40 -left-24 w-80 h-80 rounded-full bg-terracotta/10 blur-3xl"></div>
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <div class="inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-sageLight text-sage text-xs sm:text-sm font-medium mb-6 border border-sage/20">
-          <span class="w-2 h-2 rounded-full bg-terracotta"></span>
-          <span>Founded &amp; Curated by <strong>Aima Noor</strong> &bull; Bhakkar, Punjab, Pakistan</span>
-        </div>
-        <h1 class="font-editorial text-4xl sm:text-5xl lg:text-6xl font-bold text-slateInk tracking-tight leading-[1.15] mb-6">Behind every transcript lies an <span class="italic font-semibold text-terracotta">unspoken</span> story of resilience.</h1>
-        <p class="max-w-2xl mx-auto text-base sm:text-lg lg:text-xl text-slateMuted leading-relaxed mb-10">Academic life often celebrates polished outcomes while hiding quiet isolation, exam setbacks, and self-doubt. Curated by <strong>Aima Noor</strong>, this space invites students to share why they feel alone, how they rebuilt after failure—and explores those experiences through original research.</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#stories" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-slateInk text-ivory font-medium text-base hover:bg-slateInk/90 transition-all shadow-soft flex items-center justify-center gap-2"><span>Read Stories &amp; Research</span><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg></a>
-          <a href="#share" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-white text-slateInk border border-slateInk/20 font-medium text-base hover:border-terracotta hover:text-terracotta transition-all flex items-center justify-center gap-2"><svg class="w-4 h-4 text-terracotta" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" /></svg><span>Share Your Story</span></a>
-        </div>
-        <div class="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
-          <div class="p-6 rounded-2xl bg-white/80 border border-slateInk/10 shadow-card"><div class="text-terracotta font-editorial text-lg font-bold mb-1">01. Naming Loneliness</div><p class="text-sm text-slateMuted leading-relaxed">Understanding why crowded lecture halls and competitive campuses can still feel deeply isolating.</p></div>
-          <div class="p-6 rounded-2xl bg-white/80 border border-slateInk/10 shadow-card"><div class="text-sage font-editorial text-lg font-bold mb-1">02. Navigating Setbacks</div><p class="text-sm text-slateMuted leading-relaxed">Honest accounts of failed courses, rejected proposals, and the gradual steps back to self-belief.</p></div>
-          <div class="p-6 rounded-2xl bg-white/80 border border-slateInk/10 shadow-card"><div class="text-slateInk font-editorial text-lg font-bold mb-1">03. Research &amp; Essays</div><p class="text-sm text-slateMuted leading-relaxed">Structured articles connecting personal vulnerability with psychology, pedagogy, and social science.</p></div>
-        </div>
-      </div>
-    </section>
-    <section id="stories" class="py-20 sm:py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-        <div>
-          <span class="text-xs font-semibold uppercase tracking-widest text-terracotta">Community Reflections</span>
-          <h2 class="font-editorial text-3xl sm:text-4xl font-bold text-slateInk mt-2">Voices &amp; Lived Stories</h2>
-          <p class="text-slateMuted mt-2 max-w-xl text-sm sm:text-base">Real experiences shared by students and early-career researchers—reminding us that struggle is a shared human chapter, not a personal flaw.</p>
-        </div>
-        <div class="inline-flex flex-wrap gap-2 bg-ivoryDark p-1.5 rounded-2xl border border-slateInk/10 self-start md:self-auto" role="tablist" aria-label="Filter stories by category">
-          <button type="button" data-filter="all" class="filter-btn active px-4 py-2 rounded-xl text-sm font-medium transition-all bg-slateInk text-white shadow-sm">All Stories</button>
-          <button type="button" data-filter="alone" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium transition-all text-slateMuted hover:text-slateInk">Feeling Alone</button>
-          <button type="button" data-filter="failure" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium transition-all text-slateMuted hover:text-slateInk">Overcoming Failures</button>
-        </div>
-      </div>
-      <div id="storiesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-7"></div>
-    </section>
-    <section id="research" class="py-20 sm:py-24 bg-ivoryDark/70 border-y border-slateInk/10">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-2xl mb-14">
-          <span class="text-xs font-semibold uppercase tracking-widest text-sage">Research &amp; Writing Desk &bull; Aima Noor</span>
-          <h2 class="font-editorial text-3xl sm:text-4xl font-bold text-slateInk mt-2">Research Articles &amp; Essays</h2>
-          <p class="text-slateMuted mt-3 text-sm sm:text-base leading-relaxed">In-depth analyses written and curated by <strong>Aima Noor (Bhakkar)</strong>—bridging personal student narratives with literature, educational psychology, and cognitive resilience.</p>
-        </div>
-        <div id="articlesContainer" class="space-y-8"></div>
-      </div>
-    </section>
-    <section id="share" class="py-20 sm:py-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-white rounded-3xl border border-slateInk/10 shadow-soft overflow-hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-5">
-          <div class="lg:col-span-2 bg-sage text-ivory p-8 sm:p-10 flex flex-col justify-between">
-            <div>
-              <span class="inline-block px-3 py-1 rounded-full bg-white/15 text-xs font-medium tracking-wider uppercase mb-4">Your Voice Matters</span>
-              <h2 class="font-editorial text-3xl font-bold leading-snug mb-4">Share what you wish someone had told you.</h2>
-              <p class="text-ivory/85 text-sm leading-relaxed mb-6">Whether you are currently sitting with quiet academic loneliness or looking back at a failure that once felt like the end, your words can help another student feel understood.</p>
-              <ul class="space-y-3 text-sm text-ivory/90">
-                <li class="flex items-start gap-2.5"><span class="mt-1 w-1.5 h-1.5 rounded-full bg-terracottaLight shrink-0"></span><span>Post under your name, a pen name, or completely anonymously.</span></li>
-                <li class="flex items-start gap-2.5"><span class="mt-1 w-1.5 h-1.5 rounded-full bg-terracottaLight shrink-0"></span><span>Focus on honest reflection—no perfection required.</span></li>
-                <li class="flex items-start gap-2.5"><span class="mt-1 w-1.5 h-1.5 rounded-full bg-terracottaLight shrink-0"></span><span>Submissions appear immediately in your browser preview below.</span></li>
-              </ul>
-            </div>
-            <div class="mt-8 pt-6 border-t border-white/15 text-xs text-ivory/80 leading-relaxed">
-              <p class="font-semibold text-white mb-1">Editorial Moderation Note:</p>
-              <p>Want to collect public stories safely before publishing? You can also link an external <strong>Google Form</strong> here so submissions come to your inbox for review first.</p>
-              <button type="button" id="toggleFormGuideBtn" class="mt-2.5 inline-flex items-center gap-1.5 text-terracottaLight font-medium underline hover:text-white transition-colors"><span>How to connect a Google Form &rarr;</span></button>
-              <div id="googleFormGuideBox" class="hidden mt-3 p-3 rounded-xl bg-slateInk/40 text-ivory/90 text-[11px] leading-relaxed">1. Go to <strong>forms.google.com</strong> &amp; create a form with Name, Category, and Story fields.<br/>2. Click <em>Send &rarr; Copy Link</em>.<br/>3. Replace the button link in this section with your Form URL so readers can submit directly to your Google Sheet!</div>
-            </div>
-          </div>
-          <div class="lg:col-span-3 p-8 sm:p-10">
-            <form id="storyForm" class="space-y-5" novalidate>
-              <div id="formSuccessBanner" class="hidden p-4 rounded-2xl bg-sageLight border border-sage/30 text-sage text-sm flex items-start gap-3 fade-in">
-                <svg class="w-5 h-5 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <div><p class="font-semibold">Thank you for sharing your voice.</p><p class="text-xs mt-0.5 text-slateInk/80">Your story has been added to the <strong>Voices &amp; Lived Stories</strong> section above and saved in this browser.</p></div>
-              </div>
-              <div id="formErrorBanner" class="hidden p-3.5 rounded-2xl bg-terracottaLight border border-terracotta/30 text-terracotta text-sm">Please fill in your story title, experience, and key reflection before submitting.</div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-end">
-                <div><label for="authorName" class="block text-sm font-medium text-slateInk mb-1.5">Name or Pen Name</label><input type="text" id="authorName" placeholder="e.g., Ayesha K. or Final-Year Student" class="w-full px-4 py-2.5 rounded-xl border border-slateInk/20 bg-ivory/50 text-slateInk text-sm focus:outline-none focus:ring-2 focus:ring-sage focus:bg-white transition-all" /></div>
-                <div class="pb-2"><label class="inline-flex items-center gap-2.5 cursor-pointer select-none"><input type="checkbox" id="postAnonymous" class="w-4 h-4 rounded text-sage focus:ring-sage border-slateInk/30" /><span class="text-sm text-slateMuted">Post Anonymously</span></label></div>
-              </div>
-              <div><label for="storyCategory" class="block text-sm font-medium text-slateInk mb-1.5">Theme / Category</label><select id="storyCategory" class="w-full px-4 py-2.5 rounded-xl border border-slateInk/20 bg-ivory/50 text-slateInk text-sm focus:outline-none focus:ring-2 focus:ring-sage focus:bg-white transition-all"><option value="alone">Why I Feel Alone (Academic Isolation &amp; Pressure)</option><option value="failure">Overcoming a Past Failure (Setbacks &amp; Comeback)</option></select></div>
-              <div><label for="storyTitle" class="block text-sm font-medium text-slateInk mb-1.5">Story Title <span class="text-terracotta">*</span></label><input type="text" id="storyTitle" required placeholder="e.g., Surrounded by 200 Classmates, Yet Completely Invisible" class="w-full px-4 py-2.5 rounded-xl border border-slateInk/20 bg-ivory/50 text-slateInk text-sm focus:outline-none focus:ring-2 focus:ring-sage focus:bg-white transition-all" /></div>
-              <div><label for="storyBody" class="block text-sm font-medium text-slateInk mb-1.5">Your Experience <span class="text-terracotta">*</span></label><textarea id="storyBody" rows="4" required placeholder="Share what happened, how it felt, and what made that academic season difficult..." class="w-full px-4 py-3 rounded-xl border border-slateInk/20 bg-ivory/50 text-slateInk text-sm focus:outline-none focus:ring-2 focus:ring-sage focus:bg-white transition-all"></textarea></div>
-              <div><label for="storyReflection" class="block text-sm font-medium text-slateInk mb-1.5">What Helped You / Key Reflection <span class="text-terracotta">*</span></label><input type="text" id="storyReflection" required placeholder="e.g., Realizing that one failed semester does not define my intellect." class="w-full px-4 py-2.5 rounded-xl border border-slateInk/20 bg-ivory/50 text-slateInk text-sm focus:outline-none focus:ring-2 focus:ring-sage focus:bg-white transition-all" /></div>
-              <div class="pt-2"><button type="submit" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-terracotta text-white font-medium text-sm sm:text-base hover:bg-terracotta/90 transition-all shadow-sm flex items-center justify-center gap-2"><span>Publish Story to Community Wall</span><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></button></div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section id="founder" class="py-20 bg-ivoryDark/60 border-t border-slateInk/10">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slateInk/10 shadow-soft">
-          <div class="flex flex-col md:flex-row items-start md:items-center gap-7">
-            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-sage to-slateInk text-ivory flex flex-col items-center justify-center shrink-0 shadow-md"><span class="font-editorial text-2xl sm:text-3xl font-bold tracking-wider">AN</span><span class="text-[10px] uppercase tracking-widest text-ivory/80 mt-0.5">Founder</span></div>
-            <div class="flex-1">
-              <div class="flex flex-wrap items-center gap-2.5 mb-2"><span class="px-3 py-1 rounded-full bg-sageLight text-sage text-xs font-semibold uppercase tracking-wider">About the Founder &amp; Owner</span><span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-terracottaLight text-terracotta text-xs font-medium"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg><span>Bhakkar, Punjab, Pakistan</span></span></div>
-              <h2 class="font-editorial text-2xl sm:text-3xl font-bold text-slateInk">Aima Noor</h2>
-              <p class="text-xs sm:text-sm font-medium text-sage mt-0.5 mb-4">BS English Literature &amp; Linguistics Student &bull; Independent Researcher &amp; Curator</p>
-              <p class="text-sm sm:text-base text-slateMuted leading-relaxed mb-3">Assalam-o-Alaikum and welcome! I am <strong>Aima Noor</strong> from <strong>Bhakkar, Punjab, Pakistan</strong>. As a student of English Literature and Linguistics, I noticed how often students carry heavy academic expectations, quiet loneliness, and the fear of past failures without a safe place to speak honestly.</p>
-              <p class="text-sm sm:text-base text-slateMuted leading-relaxed">I founded <strong>Unspoken &amp; Unbroken</strong> with a dual vision: to give students a judgment-free community where lived stories of struggle and recovery can breathe, and to pair those human experiences with thoughtful, well-researched articles that explore the deeper roots of academic isolation and resilience.</p>
-            </div>
-          </div>
-        </div>
-        <div class="p-6 sm:p-7 rounded-2xl bg-white/90 border border-slateInk/10 shadow-card">
-          <div class="flex items-center gap-2.5 text-terracotta font-semibold text-sm mb-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg><span>Community &amp; Educational Disclaimer</span></div>
-          <p class="text-xs sm:text-sm text-slateMuted leading-relaxed">This platform is an <strong>educational, reflective, and research-oriented community space</strong> curated by Aima Noor. The stories and essays shared here are for peer understanding and academic discourse—they do not constitute professional psychological, medical, or crisis counseling. If you are experiencing severe distress, please reach out to your university counseling center or a qualified mental health professional.</p>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer class="bg-slateInk text-ivory/80 py-12 border-t border-white/10">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-      <div class="text-center sm:text-left"><p class="font-editorial text-lg font-bold text-white">Unspoken &amp; Unbroken</p><p class="text-xs text-ivory/75 mt-1">Founded &amp; Curated by <strong>Aima Noor</strong> &bull; Bhakkar, Punjab, Pakistan</p></div>
-      <div class="flex flex-wrap justify-center gap-6 text-xs sm:text-sm"><a href="#home" class="hover:text-white transition-colors">Home</a><a href="#stories" class="hover:text-white transition-colors">Stories</a><a href="#research" class="hover:text-white transition-colors">Research Articles</a><a href="#founder" class="hover:text-white transition-colors">Founder</a><a href="#share" class="hover:text-white transition-colors">Share Your Story</a></div>
-      <p class="text-xs text-ivory/60 text-center sm:text-right">&copy; <span id="currentYear"></span> Aima Noor (Bhakkar). All rights reserved.</p>
-    </div>
-  </footer>
-  <div id="readerModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-slateInk/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="bg-ivory w-full max-w-2xl max-h-[88vh] rounded-3xl shadow-2xl border border-slateInk/15 flex flex-col overflow-hidden fade-in">
-      <div class="px-6 sm:px-8 py-5 bg-white border-b border-slateInk/10 flex items-start justify-between gap-4">
-        <div><span id="modalBadge" class="inline-block px-3 py-1 rounded-full text-xs font-medium mb-2">Category</span><h3 id="modalTitle" class="font-editorial text-xl sm:text-2xl font-bold text-slateInk leading-snug">Title</h3><p id="modalMeta" class="text-xs text-slateMuted mt-1">Author &bull; Date</p></div>
-        <button type="button" id="closeModalBtn" class="p-2 rounded-xl text-slateMuted hover:text-slateInk hover:bg-ivoryDark transition-colors shrink-0" aria-label="Close reader modal"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
-      </div>
-      <div id="modalBody" class="px-6 sm:px-8 py-6 overflow-y-auto modal-scroll space-y-4 text-sm sm:text-base text-slateInk/90 leading-relaxed"></div>
-      <div class="px-6 sm:px-8 py-4 bg-white border-t border-slateInk/10 flex items-center justify-between"><span class="text-xs text-slateMuted">Unspoken &amp; Unbroken Archive</span><button type="button" id="closeModalFooterBtn" class="px-5 py-2 rounded-xl bg-slateInk text-white text-sm font-medium hover:bg-slateInk/90 transition-colors">Done Reading</button></div>
-    </div>
-  </div>
-  <script>
-    const defaultStories = [
-      { id: 'story-1', category: 'alone', tagLabel: 'Feeling Alone', title: 'Sitting in a Lecture Hall of 300 People, Yet Feeling Completely Invisible', author: 'Zainab R. (Undergraduate, 2nd Year)', readTime: '3 min read', excerpt: 'Everyone around me seemed to have study groups, inside jokes, and effortless confidence. For months, I ate lunch in the library stairwell so no one would see me alone.', fullText: ['When I first entered university, I assumed loneliness only happened when you were physically isolated. Instead, I discovered a sharper kind of solitude: being surrounded by hundreds of peers your own age while feeling like an outsider watching through glass.','Between classes, people clustered into familiar circles, comparing notes and weekend plans. I smiled politely, answered questions when spoken to, and walked back to my hostel feeling an exhausting heaviness. The hardest part was the shame—believing that if I did not have a group yet, something must be inherently unlikable about me.','Everything shifted slightly during midterm week when I admitted to a lab partner that I was struggling to understand a core concept. Instead of judging me, she exhaled in relief and said, "I thought I was the only one lost." That single moment of honesty broke the illusion that everyone else had it all figured out.'], reflection: 'Most students perform confidence on the outside while quietly hoping someone else will make the first honest move.' },
-      { id: 'story-2', category: 'failure', tagLabel: 'Overcoming Failures', title: 'Failing Core Calculus Twice Taught Me How to Actually Learn', author: 'Anonymous (Engineering Student)', readTime: '4 min read', excerpt: 'Seeing an "F" on my transcript after being a top high school student shattered my identity. It took two failed attempts before I stopped memorizing and started asking for help.', fullText: ['Throughout school, grades were my entire sense of self-worth. When I failed Calculus I in my freshman semester, I did not just feel disappointed—I felt erased. I avoided calling home for three days because I did not know how to explain that the "smart kid" had failed.','In my second attempt, panic made me repeat the exact same mistake: locking myself in my room, rereading notes passively, and hiding my confusion from teaching assistants. When I missed the passing threshold again by four marks, I seriously considered dropping out.','The turning point came when an academic advisor asked me to walk through my study habits without ego. For the first time, I attended office hours every week, joined a peer tutoring table, and treated wrong answers as diagnostic clues rather than verdicts on my intelligence. On my third attempt, I passed with a B+—and gained a resilience no easy A ever gave me.'], reflection: 'Academic failure is feedback on your current strategy, never a permanent measure of your capability.' },
-      { id: 'story-3', category: 'alone', tagLabel: 'Feeling Alone', title: 'The Quiet Isolation of Thesis Writing and Imposter Syndrome', author: 'Hamza M. (Graduate Researcher)', readTime: '3 min read', excerpt: 'Once coursework ended and research began, days blurred into silent hours at a desk. Every rejected draft convinced me I had been admitted by mistake.', fullText: ['Graduate research is rarely portrayed honestly. People see the final defense or published paper, not the six months spent staring at a blinking cursor wondering if your research question even makes sense.','Because my peers were working on different topics, we stopped meeting regularly. Days passed where my only conversations were brief emails with my supervisor. Whenever I received feedback covered in red track-changes, I internalized every critique as proof that I did not belong in academia.','What helped me step out of that fog was starting a weekly 45-minute co-working check-in with two fellow researchers—not to boast about word counts, but to openly share our roadblocks. Hearing brilliant peers admit they also felt lost made the isolation bearable.'], reflection: 'Independent research does not have to mean isolated struggle; shared vulnerability sustains scholarly endurance.' },
-      { id: 'story-4', category: 'failure', tagLabel: 'Overcoming Failures', title: 'After Seven Scholarship Rejections, One "Yes" Changed My Direction', author: 'Sana T. (Social Sciences Alumna)', readTime: '4 min read', excerpt: 'Each polite rejection email felt heavier than the last. Looking back, rewriting my statement of purpose forced me to clarify what I genuinely cared about.', fullText: ['During my final year, I applied to seven fellowships and graduate programs. Between February and April, I received seven variations of the same sentence: "We regret to inform you..." Watching classmates announce their acceptances online while my inbox filled with rejections tested every ounce of my self-belief.','After the seventh rejection, I stepped away from applications for three weeks to grieve the timeline I had imagined for myself. Then, instead of rushing another generic application, I asked a mentor to critique my essays honestly. She pointed out that I was writing what I thought committees wanted to hear, rather than my real research curiosity.','I spent the next six months volunteering on a local educational research project, refining my voice, and reapplying to two targeted programs. I was accepted into my top-choice program with funding—and arrived far more grounded than I would have been a year earlier.'], reflection: 'Delayed timelines often give us the clarity and depth we need to thrive when the right door finally opens.' }
-    ];
-    const researchArticles = [
-      { id: 'article-1', tag: 'Educational Psychology & Literature', date: 'November 2026 • 6 min read', title: 'The Architecture of Campus Loneliness: Why Hyper-Connected Students Feel Unseen', author: 'Aima Noor · Bhakkar', abstract: 'Despite unprecedented digital connectivity, university students report record levels of perceived social isolation. This paper examines how performative academic culture, competitive grading curves, and superficial social media comparisons create "pluralistic ignorance"—a state where students privately struggle while assuming their peers are thriving effortlessly.', takeaways: ['Pluralistic ignorance prevents students from seeking peer support early in the semester.','Structured collaborative learning environments significantly reduce academic alienation.','Normalizing struggle in syllabi and orientation programs improves retention and well-being.'], fullContent: ['Introduction: Modern higher education institutions are denser and more digitally connected than at any point in history. Yet longitudinal surveys across universities consistently identify chronic loneliness as one of the primary predictors of academic disengagement and burnout.','The Mechanism of Pluralistic Ignorance: In psychology and social discourse, pluralistic ignorance occurs when individuals privately reject a norm or experience distress, yet assume everyone else accepts it or is coping seamlessly. On campus, students curate outward composure—posting library milestones and internship announcements—while concealing exam anxiety and homesickness.','Implications for Academic Communities: When isolation is misread as personal inadequacy, students withdraw further. Research indicates that creating low-stakes spaces for authentic narrative sharing—alongside pedagogical shifts from hyper-individualized competition to cohort-based inquiry—restores a sense of intellectual belonging.'] },
-      { id: 'article-2', tag: 'Narrative Identity & Resilience', date: 'October 2026 • 7 min read', title: 'Reframing Academic Setbacks: Narrative Identity and Post-Failure Growth in Higher Education', author: 'Aima Noor · Bhakkar', abstract: 'How students interpret an early academic failure—whether as a fixed trait ("I am not cut out for this") or a malleable process ("My current approach needs revision")—profoundly shapes long-term persistence. Drawing on narrative psychology and attribution theory, this essay outlines practical frameworks for transforming setbacks into metacognitive growth.', takeaways: ['Fixed-trait attribution after failure triggers avoidance behaviors and imposter syndrome.','Reflective writing helps students separate self-worth from temporary evaluation metrics.','Mentorship that models intellectual struggle accelerates recovery after poor exam outcomes.'], fullContent: ['The Shock of First Failure: For many high-achieving students, university represents the first environment where familiar study strategies prove insufficient. Without a framework for processing academic setbacks, a single failed exam or rejected paper can precipitate an identity crisis.','Attribution Theory in Practice: Psychologist Bernard Weiner demonstrated that how learners explain failure—internal vs. external, stable vs. unstable, controllable vs. uncontrollable—determines future motivation. When students shift from stable attributions ("I lack ability") to controllable ones ("I need active recall and earlier feedback"), persistence rebounds dramatically.','Constructing Redemptive Narratives: Narrative resilience research shows that students who articulate what a setback taught them, rather than suppressing the memory, exhibit stronger emotional regulation and higher academic self-efficacy in subsequent semesters.'] },
-      { id: 'article-3', tag: 'Sociology of Higher Education', date: 'September 2026 • 5 min read', title: 'Silent Desks: The Emotional Labor of Independent Thesis & Dissertation Research', author: 'Aima Noor · Bhakkar', abstract: 'Transitioning from structured coursework to self-directed research alters a student’s daily social ecosystem. This essay explores the structural isolation of thesis writing and proposes peer-led scholarly circles as an essential antidote to student burnout.', takeaways: ['Loss of routine classroom contact removes informal peer reassurance during research phases.','Imposter phenomenon intensifies when critical feedback occurs in isolation.','Peer writing collectives foster accountability without toxic comparison.'], fullContent: ['The Structural Shift: Coursework provides built-in milestones, weekly peer interaction, and clear rubrics. Thesis and dissertation phases dismantle that scaffolding overnight, leaving emerging scholars to navigate ambiguity largely alone.','Feedback Without Context: In solitary research environments, constructive critique from advisors can feel overwhelmingly personal because researchers lack daily visibility into how often their peers also rewrite chapters from scratch.','Rebuilding Scholarly Community: Institutions and student-led initiatives that normalize work-in-progress seminars and transparent reflection help demystify scholarship, reminding researchers that uncertainty is an inherent feature of original inquiry.'] }
-    ];
-    const STORAGE_KEY = 'unspoken_unbroken_stories_v1';
-    function getStories() { try { const saved = localStorage.getItem(STORAGE_KEY); if (saved) { const parsed = JSON.parse(saved); return [...parsed, ...defaultStories]; } } catch (e) { console.warn('Could not read from localStorage:', e); } return [...defaultStories]; }
-    function saveCustomStory(newStory) { try { const saved = localStorage.getItem(STORAGE_KEY); const existingCustom = saved ? JSON.parse(saved) : []; existingCustom.unshift(newStory); localStorage.setItem(STORAGE_KEY, JSON.stringify(existingCustom)); } catch (e) { console.warn('Could not save to localStorage:', e); } }
-    let currentFilter = 'all';
-    function renderStories(filter = 'all') {
-      currentFilter = filter;
-      const grid = document.getElementById('storiesGrid');
-      const allStories = getStories();
-      const filtered = filter === 'all' ? allStories : allStories.filter(s => s.category === filter);
-      grid.innerHTML = '';
-      if (filtered.length === 0) { grid.innerHTML = `<div class="col-span-full text-center py-12 bg-white rounded-2xl border border-slateInk/10"><p class="text-slateMuted">No stories found in this category yet. Be the first to share yours below!</p></div>`; return; }
-      filtered.forEach(story => {
-        const isAlone = story.category === 'alone';
-        const badgeClasses = isAlone ? 'bg-sageLight text-sage border-sage/20' : 'bg-terracottaLight text-terracotta border-terracotta/20';
-        const card = document.createElement('article');
-        card.className = 'bg-white rounded-2xl p-6 sm:p-7 border border-slateInk/10 shadow-card hover:shadow-soft transition-all flex flex-col justify-between fade-in';
-        card.innerHTML = `<div><div class="flex items-center justify-between gap-2 mb-4"><span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${badgeClasses}">${escapeHTML(story.tagLabel)}</span><span class="text-xs text-slateMuted">${escapeHTML(story.readTime)}</span></div><h3 class="font-editorial text-xl sm:text-2xl font-bold text-slateInk leading-snug mb-3">${escapeHTML(story.title)}</h3><p class="text-sm text-slateMuted leading-relaxed mb-5">"${escapeHTML(story.excerpt)}"</p></div><div class="pt-4 border-t border-slateInk/10 flex items-center justify-between gap-4"><span class="text-xs font-medium text-slateInk/80 truncate">By ${escapeHTML(story.author)}</span><button type="button" data-story-id="${story.id}" class="read-story-btn shrink-0 inline-flex items-center gap-1.5 text-sm font-semibold text-sage hover:text-terracotta transition-colors"><span>Read Full Story</span><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></button></div>`;
-        grid.appendChild(card);
-      });
-      document.querySelectorAll('.read-story-btn').forEach(btn => { btn.addEventListener('click', () => { const id = btn.getAttribute('data-story-id'); const found = getStories().find(s => s.id === id); if (found) openStoryModal(found); }); });
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyBXh23jcGTzEfGTAXcu3b9BPtm0Qa4sevw",
+      authDomain: "unspoken-unbroken.firebaseapp.com",
+      projectId: "unspoken-unbroken",
+      storageBucket: "unspoken-unbroken.firebasestorage.app",
+      messagingSenderId: "568109513684",
+      appId: "1:568109513684:web:72bf8ccb4cacf6bb6df441"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const ADMIN_PASSWORD = "aima2026";
+    let isAdmin = localStorage.getItem("noor_admin") === "true";
+    let allPosts = [];
+    let allStories = [];
+    function updateAdminUI() {
+      const bar = document.getElementById("adminBar");
+      if (isAdmin) bar.classList.add("active"); else bar.classList.remove("active");
     }
-    function renderArticles() {
-      const container = document.getElementById('articlesContainer');
-      container.innerHTML = '';
-      researchArticles.forEach(article => {
-        const card = document.createElement('article');
-        card.className = 'bg-white rounded-3xl p-7 sm:p-9 border border-slateInk/10 shadow-card hover:shadow-soft transition-all';
-        card.innerHTML = `<div class="flex flex-wrap items-center justify-between gap-2 mb-3"><span class="px-3 py-1 rounded-full bg-ivoryDark text-slateInk text-xs font-semibold tracking-wide uppercase">${escapeHTML(article.tag)}</span><span class="text-xs text-slateMuted">${escapeHTML(article.date)}</span></div><h3 class="font-editorial text-2xl sm:text-3xl font-bold text-slateInk leading-snug mb-3">${escapeHTML(article.title)}</h3><p class="text-sm sm:text-base text-slateMuted leading-relaxed mb-5">${escapeHTML(article.abstract)}</p><div class="bg-ivory rounded-2xl p-4 sm:p-5 mb-6 border border-slateInk/5"><p class="text-xs font-semibold uppercase tracking-wider text-sage mb-2">Key Research Takeaways</p><ul class="space-y-1.5 text-xs sm:text-sm text-slateInk/90">${article.takeaways.map(item => `<li class="flex items-start gap-2"><span class="text-terracotta font-bold">&bull;</span><span>${escapeHTML(item)}</span></li>`).join('')}</ul></div><div class="flex items-center justify-between"><span class="text-xs text-slateMuted font-medium">Written by ${escapeHTML(article.author)}</span><button type="button" data-article-id="${article.id}" class="read-article-btn px-5 py-2.5 rounded-xl bg-slateInk text-ivory text-sm font-medium hover:bg-sage transition-colors inline-flex items-center gap-2"><span>Read Full Article</span><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg></button></div>`;
-        container.appendChild(card);
-      });
-      document.querySelectorAll('.read-article-btn').forEach(btn => { btn.addEventListener('click', () => { const id = btn.getAttribute('data-article-id'); const found = researchArticles.find(a => a.id === id); if (found) openArticleModal(found); }); });
+    async function loadContent() {
+      allPosts = []; allStories = [];
+      try {
+        const postSnap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc")));
+        postSnap.forEach(d => allPosts.push({ id: d.id, ...d.data() }));
+        const storySnap = await getDocs(query(collection(db, "stories"), orderBy("createdAt", "desc")));
+        storySnap.forEach(d => allStories.push({ id: d.id, ...d.data() }));
+      } catch (err) { console.warn("Firestore read info:", err); }
+      renderAll();
     }
-    const modal = document.getElementById('readerModal');
-    const modalBadge = document.getElementById('modalBadge');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalMeta = document.getElementById('modalMeta');
-    const modalBody = document.getElementById('modalBody');
-    function openStoryModal(story) {
-      const isAlone = story.category === 'alone';
-      modalBadge.textContent = story.tagLabel;
-      modalBadge.className = `inline-block px-3 py-1 rounded-full text-xs font-medium mb-2 ${isAlone ? 'bg-sageLight text-sage' : 'bg-terracottaLight text-terracotta'}`;
-      modalTitle.textContent = story.title;
-      modalMeta.textContent = `Shared by ${story.author} • ${story.readTime}`;
-      modalBody.innerHTML = `${story.fullText.map(p => `<p>${escapeHTML(p)}</p>`).join('')}<div class="mt-6 p-4 rounded-2xl bg-sageLight/60 border border-sage/20"><p class="text-xs font-semibold uppercase tracking-wider text-sage mb-1">Key Reflection / What Helped</p><p class="text-sm font-medium text-slateInk italic">"${escapeHTML(story.reflection)}"</p></div>`;
-      showModal();
+    function renderAll() {
+      const researchGrid = document.getElementById("researchGrid");
+      const cssGrid = document.getElementById("cssGrid");
+      const storiesGrid = document.getElementById("storiesGrid");
+      const researchPosts = allPosts.filter(p => p.section === "research");
+      const cssPosts = allPosts.filter(p => p.section === "css");
+      const approvedStories = allStories.filter(s => s.approved);
+      const pendingStories = allStories.filter(s => !s.approved);
+      document.getElementById("pendingCount").textContent = pendingStories.length;
+      researchGrid.innerHTML = researchPosts.length ? researchPosts.map(p => cardHTML(p, "post")).join("") : `<div class="empty-state">No research articles published yet. New pieces will appear here as they are added.</div>`;
+      cssGrid.innerHTML = cssPosts.length ? cssPosts.map(p => cardHTML(p, "post")).join("") : `<div class="empty-state">CSS & General Knowledge notes are being prepared and will appear here soon.</div>`;
+      storiesGrid.innerHTML = approvedStories.length ? approvedStories.map(s => cardHTML(s, "story")).join("") : `<div class="empty-state">No community stories published yet. Click <strong>Share a Story</strong> to contribute.</div>`;
     }
-    function openArticleModal(article) {
-      modalBadge.textContent = article.tag;
-      modalBadge.className = 'inline-block px-3 py-1 rounded-full text-xs font-medium mb-2 bg-ivoryDark text-slateInk';
-      modalTitle.textContent = article.title;
-      modalMeta.textContent = `${article.author} • ${article.date}`;
-      modalBody.innerHTML = `<div class="p-4 rounded-2xl bg-ivoryDark/70 border border-slateInk/10 text-xs sm:text-sm text-slateMuted mb-4"><strong class="text-slateInk">Abstract:</strong> ${escapeHTML(article.abstract)}</div>${article.fullContent.map(p => `<p>${escapeHTML(p)}</p>`).join('')}<div class="mt-6 p-4 rounded-2xl bg-terracottaLight/60 border border-terracotta/20"><p class="text-xs font-semibold uppercase tracking-wider text-terracotta mb-2">Summary Takeaways</p><ul class="space-y-1 text-xs sm:text-sm text-slateInk">${article.takeaways.map(t => `<li>&bull; ${escapeHTML(t)}</li>`).join('')}</ul></div>`;
-      showModal();
+    function cardHTML(item, type) {
+      const meta = type === "post" ? item.category : `By ${item.author}`;
+      const desc = type === "post" ? item.summary : item.body.slice(0, 140) + (item.body.length > 140 ? "..." : "");
+      const deleteBtn = isAdmin ? `<button class="read-btn" style="color:#f87171; margin-left:12px;" onclick="deleteItem('${type}', '${item.id}')">Delete</button>` : "";
+      return `<article class="card"><div><div class="card-meta"><span>${escapeHTML(meta)}</span><span>${escapeHTML(item.date || "")}</span></div><h3>${escapeHTML(item.title)}</h3><p>${escapeHTML(desc)}</p></div><div class="card-footer"><span>${type === "post" ? "Curated by Noor" : "Community Voice"}</span><div><button class="read-btn" onclick="openReader('${type}', '${item.id}')">Read →</button>${deleteBtn}</div></div></article>`;
     }
-    function showModal() { modal.classList.remove('hidden'); modal.classList.add('flex'); document.body.style.overflow = 'hidden'; }
-    function closeModal() { modal.classList.add('hidden'); modal.classList.remove('flex'); document.body.style.overflow = ''; }
-    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
-    document.getElementById('closeModalFooterBtn').addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
-    document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('bg-slateInk', 'text-white', 'shadow-sm'); b.classList.add('text-slateMuted'); }); btn.classList.add('bg-slateInk', 'text-white', 'shadow-sm'); btn.classList.remove('text-slateMuted'); renderStories(btn.getAttribute('data-filter')); }); });
-    const storyForm = document.getElementById('storyForm');
-    const authorInput = document.getElementById('authorName');
-    const anonCheckbox = document.getElementById('postAnonymous');
-    const successBanner = document.getElementById('formSuccessBanner');
-    const errorBanner = document.getElementById('formErrorBanner');
-    anonCheckbox.addEventListener('change', () => { if (anonCheckbox.checked) { authorInput.value = ''; authorInput.disabled = true; authorInput.placeholder = 'Posting Anonymously'; } else { authorInput.disabled = false; authorInput.placeholder = 'e.g., Ayesha K. or Final-Year Student'; } });
-    storyForm.addEventListener('submit', (e) => {
+    function escapeHTML(str) { if (!str) return ""; return str.replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
+    window.openReader = (type, id) => {
+      const item = type === "post" ? allPosts.find(p => p.id === id) : allStories.find(s => s.id === id);
+      if (!item) return;
+      document.getElementById("readerMeta").textContent = type === "post" ? item.category : "Story";
+      document.getElementById("readerTitle").textContent = item.title;
+      document.getElementById("readerSub").textContent = type === "post" ? `Curated by Noor • ${item.date || ""}` : `Shared by ${item.author} • ${item.date || ""}`;
+      document.getElementById("readerBody").textContent = item.body;
+      document.getElementById("readerModal").classList.add("open");
+    };
+    window.openStoryModal = () => document.getElementById("storyModal").classList.add("open");
+    window.openAdminLogin = () => { if (isAdmin) { updateAdminUI(); alert("Admin mode is already active."); return; } document.getElementById("loginModal").classList.add("open"); };
+    window.openPublishModal = () => document.getElementById("publishModal").classList.add("open");
+    window.closeModal = (id) => document.getElementById(id).classList.remove("open");
+    window.verifyAdmin = () => {
+      const val = document.getElementById("adminPassInput").value;
+      if (val === ADMIN_PASSWORD) { isAdmin = true; localStorage.setItem("noor_admin", "true"); closeModal("loginModal"); updateAdminUI(); renderAll(); } else { alert("Incorrect password."); }
+    };
+    window.logoutAdmin = () => { isAdmin = false; localStorage.removeItem("noor_admin"); updateAdminUI(); renderAll(); };
+    document.getElementById("publishForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      errorBanner.classList.add('hidden');
-      successBanner.classList.add('hidden');
-      const category = document.getElementById('storyCategory').value;
-      const title = document.getElementById('storyTitle').value.trim();
-      const body = document.getElementById('storyBody').value.trim();
-      const reflection = document.getElementById('storyReflection').value.trim();
-      const isAnon = anonCheckbox.checked;
-      const rawAuthor = authorInput.value.trim();
-      if (!title || !body || !reflection) { errorBanner.classList.remove('hidden'); return; }
-      const authorDisplay = isAnon || !rawAuthor ? 'Anonymous Student' : rawAuthor;
-      const paragraphs = body.split(/\n+/).filter(p => p.trim().length > 0);
-      const excerpt = body.length > 165 ? body.slice(0, 162) + '...' : body;
-      const wordCount = body.split(/\s+/).length;
-      const readMinutes = Math.max(1, Math.ceil(wordCount / 180));
-      const newStory = { id: 'custom-' + Date.now(), category: category, tagLabel: category === 'alone' ? 'Feeling Alone' : 'Overcoming Failures', title: title, author: authorDisplay, readTime: `${readMinutes} min read`, excerpt: excerpt, fullText: paragraphs, reflection: reflection };
-      saveCustomStory(newStory);
-      renderStories(currentFilter);
-      storyForm.reset();
-      authorInput.disabled = false;
-      authorInput.placeholder = 'e.g., Ayesha K. or Final-Year Student';
-      successBanner.classList.remove('hidden');
+      const dateStr = new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" });
+      try {
+        await addDoc(collection(db, "posts"), { section: document.getElementById("pubSection").value, category: document.getElementById("pubCategory").value.trim(), title: document.getElementById("pubTitle").value.trim(), summary: document.getElementById("pubSummary").value.trim(), body: document.getElementById("pubBody").value.trim(), date: dateStr, createdAt: serverTimestamp() });
+        e.target.reset(); closeModal("publishModal"); alert("Published live."); loadContent();
+      } catch (err) { alert("Error publishing: " + err.message); }
     });
-    document.getElementById('toggleFormGuideBtn').addEventListener('click', () => { const box = document.getElementById('googleFormGuideBox'); box.classList.toggle('hidden'); });
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const menuIconOpen = document.getElementById('menuIconOpen');
-    const menuIconClose = document.getElementById('menuIconClose');
-    mobileMenuBtn.addEventListener('click', () => { const isHidden = mobileMenu.classList.contains('hidden'); mobileMenu.classList.toggle('hidden'); menuIconOpen.classList.toggle('hidden', !isHidden); menuIconClose.classList.toggle('hidden', isHidden); mobileMenuBtn.setAttribute('aria-expanded', String(isHidden)); });
-    document.querySelectorAll('.mobile-nav-link').forEach(link => { link.addEventListener('click', () => { mobileMenu.classList.add('hidden'); menuIconOpen.classList.remove('hidden'); menuIconClose.classList.add('hidden'); }); });
-    function escapeHTML(str) { const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
-    renderStories('all');
-    renderArticles();
+    document.getElementById("storyForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const dateStr = new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" });
+      try {
+        await addDoc(collection(db, "stories"), { author: document.getElementById("storyAuthor").value.trim(), title: document.getElementById("storyTitle").value.trim(), body: document.getElementById("storyContent").value.trim(), date: dateStr, approved: false, createdAt: serverTimestamp() });
+        e.target.reset(); closeModal("storyModal"); alert("Submitted for review."); loadContent();
+      } catch (err) { alert("Could not submit right now: " + err.message); }
+    });
+    window.openModerationModal = () => {
+      const list = document.getElementById("moderationList");
+      if (allStories.length === 0) { list.innerHTML = "<p style='color:var(--text-muted);'>No stories submitted yet.</p>"; }
+      else {
+        list.innerHTML = allStories.map(s => `<div style="border:1px solid var(--border-subtle); padding:16px; border-radius:12px; margin-bottom:12px; background:rgba(9,15,26,0.55);"><div style="display:flex; justify-content:space-between; margin-bottom:6px; gap:10px;"><strong>${escapeHTML(s.title)}</strong><span class="badge-pending">${s.approved ? "Live" : "Pending"}</span></div><div style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">By ${escapeHTML(s.author)}</div><p style="font-size:0.9rem; margin-bottom:12px; color:var(--text-main);">${escapeHTML(s.body)}</p><div style="display:flex; gap:10px;">${!s.approved ? `<button class="btn-primary" style="padding:7px 12px; font-size:0.82rem;" onclick="approveStory('${s.id}')">Approve</button>` : ""}<button class="btn-ghost" style="padding:7px 12px; font-size:0.82rem; color:#f87171;" onclick="deleteItem('story', '${s.id}')">Delete</button></div></div>`).join("");
+      }
+      document.getElementById("moderationModal").classList.add("open");
+    };
+    window.approveStory = async (id) => { await updateDoc(doc(db, "stories", id), { approved: true }); await loadContent(); openModerationModal(); };
+    window.deleteItem = async (type, id) => {
+      if (!confirm("Delete this item?")) return;
+      const colName = type === "post" ? "posts" : "stories";
+      await deleteDoc(doc(db, colName, id)); await loadContent();
+      if (document.getElementById("moderationModal").classList.contains("open")) { openModerationModal(); }
+    };
+    updateAdminUI(); loadContent();
   </script>
 </body>
 </html>
